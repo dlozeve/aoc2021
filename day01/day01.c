@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include <stdio.h>
 
 int main(void)
@@ -10,16 +9,15 @@ int main(void)
 
   int part1 = 0;
   for (int i = 1; i < count; ++i) {
-    if (buf[i] > buf[i - 1]) part1++;
+    part1 += buf[i] > buf[i - 1];
   }
-  printf("Part 1: %d\n", part1);
+  printf("%d\n", part1);
 
   int part2 = 0;
   for (int i = 3; i < count; ++i) {
-    if (buf[i] + buf[i-1] + buf[i-2] > buf[i-1] + buf[i-2] + buf[i-3])
-      part2++;
+    part2 += buf[i] > buf[i-3];
   }
-  printf("Part 2: %d\n", part2);
+  printf("%d\n", part2);
 
   return 0;
 }
