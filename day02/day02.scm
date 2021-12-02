@@ -21,7 +21,17 @@
   (let-values (((pos depth) (move l 0 0)))
     (* pos depth)))
 
-(define (part2 l) l)
+(define (move2 steps pos depth aim)
+  (match steps
+    (() (values pos depth))
+    ((('down n) . rest) (move2 rest pos depth (+ aim n)))
+    ((('up n) . rest) (move2 rest pos depth (- aim n)))
+    ((('forward n) . rest) (move2 rest (+ pos n) (+ depth (* aim n)) aim))
+    (_ (error "unknown instruction"))))
+
+(define (part2 l)
+  (let-values (((pos depth) (move2 l 0 0 0)))
+    (* pos depth)))
 
 (let ((in (read-input)))
   (print (part1 in))
