@@ -1,38 +1,32 @@
-#include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 
-typedef struct {
-  int pos;
-  int depth;
-  int aim;
-} State;
-
-int main()
-{
-  char instr[256] = {0};
+int main() {
+  char instr[9] = {0};
   int n = 0;
 
-  State part1 = {0};
-  State part2 = {0};
+  int pos = 0;
+  int depth = 0;
+  int aim = 0;
 
   while (scanf("%s %d\n", instr, &n) == 2) {
-    if (!strncmp(instr, "down", 4)) {
-      part1.depth += n;
-      part2.aim += n;
-    } else if (!strncmp(instr, "up", 2)) {
-      part1.depth -= n;
-      part2.aim -= n;
-    } else if (!strncmp(instr, "forward", 7)) {
-      part1.pos += n;
-      part2.pos += n;
-      part2.depth += part2.aim * n;
-    } else {
+    switch (instr[0]) {
+    case 'd':
+      aim += n;
+      break;
+    case 'u':
+      aim -= n;
+      break;
+    case 'f':
+      pos += n;
+      depth += aim * n;
+      break;
+    default:
       fprintf(stderr, "unknown instruction: %s", instr);
+      break;
     }
   }
-  printf("%d\n", part1.pos * part1.depth);
-  printf("%d\n", part2.pos * part2.depth);
+  printf("%d\n", pos * aim);
+  printf("%d\n", pos * depth);
 
   return 0;
 }
