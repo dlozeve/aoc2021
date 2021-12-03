@@ -21,8 +21,26 @@
 	 (epsilon (string->number (list->binary-string (map (lambda (d) (- 1 d)) most-common)) 2)))
     (* gamma epsilon)))
 
+(define (o2-rating numbers i)
+  (if (= 1 (length numbers))
+      (car numbers)
+      (let* ((digits (map (lambda (l) (list-ref l i)) numbers))
+	     (most-common (if (>= (apply + digits) (/ (length numbers) 2)) 1 0))
+	     (new-numbers (filter (lambda (n) (= (list-ref n i) most-common)) numbers)))
+	(o2-rating new-numbers (+ 1 i)))))
+
+(define (co2-rating numbers i)
+  (if (= 1 (length numbers))
+      (car numbers)
+      (let* ((digits (map (lambda (l) (list-ref l i)) numbers))
+	     (least-common (if (>= (apply + digits) (/ (length numbers) 2)) 0 1))
+	     (new-numbers (filter (lambda (n) (= (list-ref n i) least-common)) numbers)))
+	(co2-rating new-numbers (+ 1 i)))))
+
 (define (part2 l)
-  l)
+  (let ((o2 (string->number (list->binary-string (o2-rating l 0)) 2))
+	(co2 (string->number (list->binary-string (co2-rating l 0)) 2)))
+    (* o2 co2)))
 
 (let ((in (read-input)))
   (print (part1 in))
