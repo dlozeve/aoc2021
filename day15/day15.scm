@@ -44,7 +44,6 @@
   (define dist (make-array vector-storage-class (array-shape grid) (* 10 m n)))
   (array-set! dist #(0 0) 0)
   (let lp ((v #(0 0)))
-    ;;(printf "~a ~a~n" v (array-ref dist v))
     (do-ec (: n (neighbours grid v))
 	   (if (set-contains? unvisited n))
 	   (begin
